@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="FrameWork">
+      <UniqueIdentifier>{6a45c04d-d47a-4e6a-a0f5-02b519f40971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GIamge">
+      <UniqueIdentifier>{be8a5e88-a39a-4292-95ba-7d4b55f1e4bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\DesignPattern">
+      <UniqueIdentifier>{ee0f4309-0b42-4b0e-a418-5f4257b885d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameNode">
+      <UniqueIdentifier>{41a620e3-49db-4963-ac87-121992df8851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Timer">
+      <UniqueIdentifier>{b5636ad9-b753-43b0-a895-f61c27a6e8f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\PCH">
+      <UniqueIdentifier>{60a3ff56-0960-4686-aa2b-3193a1bc8f44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Utility">
+      <UniqueIdentifier>{17792713-0cd8-4f5c-b7b5-f578702fcf30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ManagerClass">
+      <UniqueIdentifier>{e12c5f51-6a21-417a-bdbc-be30824ede67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class">
+      <UniqueIdentifier>{740a6786-8894-4714-a6ea-09b63a9c245a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Bullets">
+      <UniqueIdentifier>{afdf1f80-9e6e-429e-bcb8-dbaa7cf53b05}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootingGame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>FrameWork\DesignPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="GameNode.h">
+      <Filter>FrameWork\GameNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Stdafx.h">
+      <Filter>FrameWork\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="GImage.h">
+      <Filter>FrameWork\GIamge</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>FrameWork\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonMacroFunction.h">
+      <Filter>FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomFunction.h">
+      <Filter>FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>ManagerClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullets.h">
+      <Filter>Class\Bullets</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameNode.cpp">
+      <Filter>FrameWork\GameNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Stdafx.cpp">
+      <Filter>FrameWork\PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="ShootingGame.cpp" />
+    <ClCompile Include="GImage.cpp">
+      <Filter>FrameWork\GIamge</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>FrameWork\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>ManagerClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullets.cpp">
+      <Filter>Class\Bullets</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ShootingGame.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="ShootingGame.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
