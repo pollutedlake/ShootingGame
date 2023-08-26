@@ -1,6 +1,77 @@
 #include "stdafx.h"
 #include "Bullets.h"
-#include "SG_Enemy.h"
+#include "Enemy.h"
+
+HRESULT Bullet::init(const char* imageName, int bulletMax, float range)
+{
+	_imageName = imageName;
+	_range = range;
+	_bulletMax = bulletMax;
+
+	return S_OK;
+}
+
+void Bullet::release(void)
+{
+	_vBullet.clear();
+}
+
+void Bullet::update(void)
+{
+	move();
+}
+
+void Bullet::render(void)
+{
+	draw();
+}
+
+void Bullet::fire(float x, float y, float angle, float speed)
+{
+	if (_bulletMax <= _vBullet.size()) return;
+	tagBullet bullet;
+	ZeroMemory(&bullet, sizeof(tagBullet));
+
+	bullet.img = IMAGEMANAGER->findImage(_imageName);
+	bullet.speed = speed;
+	bullet.angle = angle;
+	bullet.x = bullet.fireX = x;
+	bullet.y = bullet.fireY = y;
+	bullet.rc = RectMakeCenter(bullet.x, bullet.y,
+		bullet.img->getWidth(), bullet.img->getHeight());
+	_vBullet.push_back(bullet);
+}
+
+void Bullet::draw(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		_viBullet->img->render(getMemDC(), _viBullet->rc.left, _viBullet->rc.top);
+	}
+}
+
+void Bullet::move(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();)
+	{
+		_viBullet->x += cosf(_viBullet->angle) * _viBullet->speed;
+		_viBullet->y += -sinf(_viBullet->angle) * _viBullet->speed;
+		_viBullet->rc = RectMakeCenter(_viBullet->x, _viBullet->y, _viBullet->img->getWidth(), _viBullet->img->getHeight());
+		if (MY_UTIL::getDistance(_viBullet->fireX, _viBullet->fireY, _viBullet->x, _viBullet->y) > _range)
+		{
+			_viBullet = _vBullet.erase(_viBullet);
+		}
+		else
+		{
+			++_viBullet;
+		}
+	}
+}
+
+void Bullet::removeBullet(int arrNum)
+{
+	_vBullet.erase(_vBullet.begin() + arrNum);
+}
 
 HRESULT Missile::init(int bulletMax, float range)
 {
@@ -9,7 +80,6 @@ HRESULT Missile::init(int bulletMax, float range)
 	for (int i = 0; i < bulletMax; i++)
 	{
 		tagBullet bullet;
-		// ZeroMemory(Zero) vs memset(nonZero) ZeroMemory 안에 memset동작함
 		ZeroMemory(&bullet, sizeof(tagBullet));
 
 		bullet.img = new GImage;
@@ -124,7 +194,6 @@ void MissileM1::fire(float x, float y)
 {
 	if (_bulletMax <= _vBullet.size()) return;
 	tagBullet bullet;
-	// ZeroMemory(Zero) vs memset(nonZero) ZeroMemory 안에 memset동작함
 	ZeroMemory(&bullet, sizeof(tagBullet));
 
 	bullet.img = new GImage;
@@ -133,14 +202,7 @@ void MissileM1::fire(float x, float y)
 	bullet.x = bullet.fireX = x;
 	bullet.y = bullet.fireY = y;
 	bullet.rc = RectMakeCenter(bullet.x, bullet.y, bullet.img->getFrameWidth(), bullet.img->getFrameHeight());
-	//vector<EventListener*> temp = EVENTMANAGER->getBullet();
-	/*for (auto iter = temp.begin(); iter != temp.end(); ++iter)
-	{
-		cout << (*iter)->getRect()->left << endl;
-	}*/
 	_vBullet.push_back(bullet);
-	//_vBullet.back().setRect(&_vBullet.back().rc);
-	//EVENTMANAGER->addBullet(&_vBullet.back());
 }
 
 void MissileM1::draw(void)
@@ -215,29 +277,6 @@ void MissileM1::removeBullet(int arrNum)
 
 	_vBullet.erase(_vBullet.begin() + arrNum);
 }
-/*
-과제 1. 움직이는 적 패턴 추가
-- 움직임을 서로 다르게 해온다.
-ㄴ 패턴은 총 3가지를 만들면 OK
-
-과제 2. 로켓 무장 변경 추가
-
-- F1: 일반 미사일
-
-- F2: 산탄
-
-- F3 : 미니 로켓 생성
-
-- F4 : 실드
-
-_ F5 : 유도 미사일
-
-_ F6 : 레이저
-
-_ F7 : 블랙홀
-ㄴ 영향을 맏는 적과 아닌 적으로 구분
-ㄴ 블랙홀에 가까운 적일수록 스킬이 끝나면 팅겨 나가는 관성이 강해진다.
-*/
 
 HRESULT Beam::init(int bulletMax, float range)
 {
@@ -248,86 +287,10 @@ HRESULT Beam::init(int bulletMax, float range)
 
 void Beam::release(void)
 {
-
-	// 1. 정석 (C++ 표준에서 얘기하는 문법)
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		SAFE_DELETE(_viBullet->img);
 	}
-
-	// 2. 줄이고 싶다. (변수에 의해서 길어지는 가동석 파괴)
-	//_viBullet = _vBullet.begin();
-	//for (; _viBullet != _vBullet.end(); ++_viBullet)
-	//{
-	//	SAFE_DELETE(_viBullet->img);
-	//}
-
-	//// 3. 협업시 효율적인건 뭐가 있을까?
-	//iterBullet iterBullet = _vBullet.begin();
-	//// 협업 x 단, 다른사람의 코드와 전혀 연관이 없다면 사용해도 됨.
-	//auto iterBullet = _vBullet.begin();
-	//for (; iterBullet != _vBullet.end(); ++iterBullet)
-	//{
-	//	SAFE_DELETE(iterBullet->img);
-	//}
-
-	//// 4. range based -> 언리얼에서는 iterator가 무거원서 빠졌기 때문에 이 방식으로 한다.(Low level)
-	//for (auto iter : _vBullet)
-	//{
-	//	SAFE_DELETE(iter.img);
-	//}
-
-	//// 5. for each(High Level) -> 별도의 연산이 필요없을 때 한해서 사용해도 된다.
-	//for each (auto iter in _vBullet)
-	//{
-	//	SAFE_DELETE(iter.img);
-	//}
-
-	//// 6. for_each
-	//// ㄴ 반복자의 시작과 끝, 그리고 함수를 파라미터로 받는다.
-	//// ㄴ 마지막 부분이 파라미터이기 때문에 람다식으로 표현이 가능
-	//for_each(_vBullet.begin(), _vBullet.end(), update);
-
-	//int Value = 0;
-	//for_each(_vBullet.begin(), _vBullet.end(), [&Value](auto& number)
-	//{
-	//	Value += number;
-	//});
-
-	///*
-	//람다식
-	//- [](){}()
-	//ㄴ [캡쳐] (매개 변수){(반환)함수 동작} (호출 인자(생략 가능))
-
-	//[] (int numA, int numB) { cout << numA + numB << endl; } (10, 20);
-	//[] {int numA, int numB) { return numA + numB; } (10, 20);
-
-	//========
-
-	//[]: 같은 영역에 있는 모든 변수에 접근 X
-	//[&]: 같은 영역에 있는 모든 변수를 참조 O
-	//[=]: 같은 영역에 있는 모든 변수를 값 O
-	//[&, 변수A]: 같은 영역에 있는 모든 변수를 참조 캡쳐. 단, 변수A만 값으로 캡쳐
-	//[=, 변수A]: 같은 영역에 있는 모든 변수를 값으로 캡쳐. 단, 변수A만 참조로 캡쳐
-	//[&변수A]: 같은 영역에 있는 변수A를 참조 캡쳐.
-	//*/
-
-	//int numberA = 10;
-	//int numberB = 20;
-
-	//auto resultA = [](int NumA, int NumB) {return NumA + NumB;} (10, 10);
-	//auto resultB = [&]()->int {return numberA + numberB;} ();
-	//auto resultC = [=, &numberA]()->int {return numberA + numberB;} ();
-
-	//// 7. transform
-	//// ㄴ 반복자를 이용한 반복문이라고 할 수 있다. (결과를 다른 컨테이너에 저장)
-	//// ㄴ 원본 컨테이너도 가능 + 람다
-
-	//vector<int> _vBulletReload;
-	//transform(_vBullet.begin(), _vBullet.end(), _vBulletReload.begin(), update);
-
-	//transform(_vBullet.begin(), _vBullet.end(), _vBulletReload.begin(), 
-	//[](__int64 numA)->auto {return numA;});
 
 	_vBullet.clear();
 }
@@ -346,7 +309,6 @@ void Beam::fire(float x, float y)
 {
 	if (_bulletMax <= _vBullet.size()) return;
 	tagBullet bullet;
-	// ZeroMemory(Zero) vs memset(nonZero) ZeroMemory 안에 memset동작함
 	ZeroMemory(&bullet, sizeof(tagBullet));
 	bullet.speed = 0.05f;
 	bullet.img = new GImage;
@@ -395,3 +357,4 @@ void Beam::move(void)
 		}
 	}
 }
+

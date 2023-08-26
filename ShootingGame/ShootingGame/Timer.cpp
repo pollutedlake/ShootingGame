@@ -24,6 +24,7 @@ HRESULT Timer::init(void)
 		_timeScale = 0.001f;
 	}
 
+	_timeElapsed = 0.0f;
 	_frameRate = 0;
 	_FPSFrameCount = 0;
 	_FPSTimeElapsed = 0.0f;

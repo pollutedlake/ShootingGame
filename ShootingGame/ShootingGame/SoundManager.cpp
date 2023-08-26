@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "TempSoundManager.h"
+#include "SoundManager.h"
 
 HRESULT TempSoundManager::init(void)
 {

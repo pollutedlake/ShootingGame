@@ -1,11 +1,9 @@
 #pragma once
 #include "GameNode.h"
-#include "EventListener.h"
 
 #define MAX_BULLET 50
 
-// 기능 -> 묶었다.
-struct tagBullet// : public EventListener
+struct tagBullet
 {
 	GImage* img;
 	RECT rc;
@@ -16,7 +14,6 @@ struct tagBullet// : public EventListener
 	float angle;
 	float speed;
 	bool fire;
-	//void collision() {cout << "미사일" << endl; }
 };
 
 struct tagEffect
@@ -25,6 +22,34 @@ struct tagEffect
 	RECT rc;
 	float x, y;
 	int count;
+};
+
+class Bullet : public GameNode
+{
+private:
+	vector<tagBullet> _vBullet;
+	vector<tagBullet>::iterator _viBullet;
+
+	const char* _imageName;
+	int _bulletMax;
+	float _range;
+public:
+
+	HRESULT init(const char* imageName, int bulletMax, float range);
+	void release(void);
+	void update(void);
+	void render(void);
+
+	void fire(float x, float y, float angle, float speed);
+	void draw(void);
+	void move(void);
+
+	void removeBullet(int arrNum);
+
+	vector<tagBullet> getBullet(void) { return _vBullet; }
+
+	Bullet(void) {}
+	virtual ~Bullet() {}
 };
 
 class Missile : public GameNode
@@ -49,7 +74,6 @@ public:
 	~Missile() {}
 };
 
-// 발사가 될때마다 만들고 삭제
 class MissileM1 : public GameNode
 {
 private:

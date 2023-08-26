@@ -8,8 +8,6 @@
 class KeyManager : public SingletonBase<KeyManager>
 {
 private:
-	//BOOL _keyUp[KEY_MAX];
-	//BOOL _keyDown[KEY_MAX];
 	bitset<KEY_MAX> _keyUp;
 	bitset<KEY_MAX> _keyDown;
 
